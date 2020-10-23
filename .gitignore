@@ -10,3 +10,16 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+*.sol
+.vagrant/machines/homestead/virtualbox/action_provision
+.vagrant/machines/homestead/virtualbox/box_meta
+.vagrant/machines/homestead/virtualbox/action_set_name
+.vagrant/machines/homestead/virtualbox/id
+.vagrant/machines/homestead/virtualbox/creator_uid
+.vagrant/machines/homestead/virtualbox/private_key
+.vagrant/machines/homestead/virtualbox/synced_folders
+.vagrant/machines/homestead/virtualbox/index_uuid
+.vagrant/machines/homestead/virtualbox/vagrant_cwd
+*.rb
+*.sh
+aliases
