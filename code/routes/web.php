@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,14 +19,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', function () {
-    return view("hello");
-});
 
 Route::get('/about', function () {
     return view("about");
 });
 
-Route::get('/news', function () {
-    return view("news");
-});
+// новости
+
+Route::get('/news', [NewsController::class, 'all'])->name('news');
+
+Route::get('/news/id/{id}', [NewsController::class, 'one'])->name('news.id');
+
+Route::get('/news/add', [NewsController::class, 'add'])->name('news.add');
+
+Route::get('/categories', [NewsController::class, 'categories'])->name('categories');
+
+Route::get('/categories/{id}', [NewsController::class, 'newsByCategory'])->name('category.id');
+
+// пользователь
+
+Route::get('/user/auth', [UserController::class, 'auth'])->name('auth');
+
+Route::get('/user/hello', [UserController::class, 'hello'])->name('hello');
