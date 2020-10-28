@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('title', 'Category news page')
+@section('news', 'active')
 
 @section('content')
     <div class="row">
@@ -15,12 +16,15 @@
                 <img src="{{ $oneNews['photo'] }}" class="img-fluid" alt="Responsive image">
             </div>
             <div class="col-md-6 module">
-                <h2><a href="{{ route('news.id', ['id' => $oneNews['id']]) }}" class="badge badge-light" target="_blank">{{ $oneNews['title'] }}</a></h2>
+                <h2>
+                    <a href="{{ route('news.id', ['id' => $oneNews['id']]) }}" class="badge badge-light" 
+                            style='white-space: break-spaces;' target="_blank">{{ $oneNews['title'] }}</a>
+                </h2>
                 <p class="line-clamp">{{ $oneNews['shortText'] }}</p>
             </div>
         </div>
         <hr>
     @empty
-        <h1>Новостей нет.</h1>
+        <p class='lead' style='text-align:center; margin-top: 100px; margin-bottom: 100px;'>Новостей в данной категории нет. Приходите завтра.</p>
     @endforelse
 @endsection
