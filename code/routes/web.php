@@ -25,4 +25,6 @@ Route::get('/news/category/{categoryId}', [NewsController::class, 'allByCategory
 
 Route::get('/news/{id}', [NewsController::class, 'one'])->name('news.id');
 
+Route::get('/news', [NewsController::class, 'all'])->name('news');
+
 

@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('title', 'Category page')
+@section('category', 'active')
 
 @section('content')
 

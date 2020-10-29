@@ -19,6 +19,12 @@
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
         }
+
+        .footer {
+            padding: 10px;
+            margin-top: 50px;
+            color: rgba(255,255,255,.5);
+        }
     </style>
 </head>
 <body>
@@ -30,11 +36,14 @@
         </a>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <li class="nav-item active">
+                <li class="nav-item @yield('welcome')">
                     <a class="nav-link" href="{{ route('welcome') }}">Главная <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @yield('category')">
                     <a class="nav-link" href="{{ route('category') }}">Рубрики</a>
+                </li>
+                <li class="nav-item @yield('news')">
+                    <a class="nav-link" href="{{ route('news') }}">Новости</a>
                 </li>
             </ul>
         </div>
@@ -42,5 +51,8 @@
     <br>
     @yield('content')
 </div>
+<footer class='container footer bg-dark'>
+    © Nekhlyudov Ilya
+</footer>
 </body>
 </html>

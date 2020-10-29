@@ -27,6 +27,18 @@ class NewsController extends Controller
     }
 
     /**
+    *   @return object
+    */
+    public function all()  {
+        $news = [];
+        foreach ($this->news as $oneNews) {
+            $oneNews['categoryName'] = $this->categories[$oneNews['categoryId']]['name'];
+            array_push($news, $oneNews);
+        }
+        return view('all-news', compact('news'));
+    }
+
+    /**
      * @param Request $request
      * @param string $id
      * @return string
