@@ -3,6 +3,11 @@
 @section('title', 'Add News')
 
 @section('content')
+    @if($status)
+        <div class="alert alert-success" role="alert">
+            Новость успешно добавлена.
+        </div>
+    @endif
     <form action="{{ route('news.store') }}" method="POST">
         @csrf
         <div class="row">
@@ -15,7 +20,7 @@
                     <label for="category">Категория</label>
                     <select class="form-control" id="category" name="category">
                         @foreach($categories as $category)
-                            <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </div>

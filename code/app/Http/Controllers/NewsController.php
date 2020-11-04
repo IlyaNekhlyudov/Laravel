@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -13,28 +14,29 @@ class NewsController extends Controller
      */
     public function allByCategory(string $categoryId)
     {
-        if (empty($this->categories[$categoryId])) {
-            return  redirect('category');
-        }
+        $news = DB::table('news')
+            ->join('categories', 'news.category_id', '=', 'categories.id')
+            ->where('category_id', $categoryId)
+            ->get([
+                'news.*',
+                'categories.name AS category_name',
+            ]);
 
-        $category = $this->categories[$categoryId];
-
-        $news = array_filter($this->news, function ($item) use ($categoryId) {
-            return $item['categoryId'] == $categoryId;
-        });
-
-        return view('category_news', compact('news', 'category'));
+        return view('category_news', compact('news'));
     }
 
     /**
     *   @return object
     */
     public function all()  {
-        $news = [];
-        foreach ($this->news as $oneNews) {
-            $oneNews['categoryName'] = $this->categories[$oneNews['categoryId']]['name'];
-            array_push($news, $oneNews);
-        }
+        $news = DB::table('news')
+            ->join('categories', 'news.category_id', '=', 'categories.id')
+            ->orderBy('news.id', 'desc')
+            ->get([
+                'news.*',
+                'categories.name AS category_name',
+            ]);
+        
         return view('all-news', compact('news'));
     }
 
@@ -45,11 +47,11 @@ class NewsController extends Controller
      */
     public function one(string $id)
     {
-        if (empty($this->news[$id])) {
+        $news = DB::table('news')->find($id);
+
+        if (!$news) {
             return redirect('category');
         }
-
-        $news = $this->news[$id];
 
         return view('news', compact('news'));
     }

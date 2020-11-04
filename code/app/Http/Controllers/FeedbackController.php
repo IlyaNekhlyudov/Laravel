@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Response;
+use DB;
 
 class FeedbackController extends Controller
 {
@@ -28,25 +29,12 @@ class FeedbackController extends Controller
     public function create(Request $request)
     {
         if ($request->old()) {
-            $path = '/files/feedback/';
-            $file = date("Y-m-d") . '.txt';
-            $result = null;
-    
-            $content = $request->old();
-            $content['time'] = date("H:i:s");
-            $content = implode(':::', $content);
-    
-            if (Storage::disk('public')->exists($path . $file)) {
-                // запись в существующий файл
-                if (Storage::disk('public')->append($path . $file, $content)) {
-                    $result = true;
-                }
-            } else {
-                // создание нового файла
-                if (Storage::disk('public')->put($path . $file, $content)) {
-                    $result = false;
-                }
-            }
+            $data = $request->old();
+            $result = DB::table('feedback')
+                        ->insert([
+                            "name"      => $data['name'],
+                            "message"   => $data['comment'],
+                        ]);
     
             return Response::view('feedback.create', [
                 'result' => $result,

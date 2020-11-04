@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Response;
+use DB;
 
 class AdminNewsController extends Controller
 {
@@ -16,9 +17,16 @@ class AdminNewsController extends Controller
      */
     public function index()
     {
+        $news = DB::table('news')
+            ->join('categories', 'news.category_id', '=', 'categories.id')
+            ->orderBy('news.id')
+            ->get([
+                'news.*',
+                'categories.name AS category_name',
+            ]);
+
         return Response::view('admin.news.index', [
-            'news'       => $this->news,
-            'categories' => $this->categories,
+            'news'       => $news,
         ]);
     }
 
@@ -27,10 +35,17 @@ class AdminNewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, $status = false)
     {
+        $categories = DB::table('categories')->get();
+
+        if (request()->get('status')) {
+            $status = true;
+        }
+
         return Response::view('admin.news.create', [
-            'categories' => $this->categories,
+            'categories' => $categories,
+            'status'     => $status,
         ]);
     }
 
@@ -42,7 +57,16 @@ class AdminNewsController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('news.create')->withInput($request->all());
+        $data = $request->all();
+        DB::table('news')
+            ->insert([
+                "title"         => $data['title'],
+                "category_id"   => $data['category'],
+                "photo"         => $data['photo'],
+                "short_text"    => $data['short-text'],
+                "full_text"     => $data['full-text'],
+            ]);
+        return redirect()->route('news.create', ['status' => true])->withInput($request->all());
     }
 
     /**
@@ -62,12 +86,20 @@ class AdminNewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response | RedirectResponse
      */
-    public function edit($id)
+    public function edit($id, $status = false)
     {
-        if (!empty($this->news[$id])) {
+        $news = DB::table('news')->find($id);
+        $categories = DB::table('categories')->select('id', 'name')->get();
+
+        if (request()->get('status')) {
+            $status = true;
+        }
+
+        if ($news) {
             return Response::view('admin.news.edit', [
-                'news'       => $this->news[$id],
-                'categories' => $this->categories,
+                'news'       => $news,
+                'categories' => $categories,
+                'status'     => $status,
             ]);
         }
         return redirect()->route('news.index');
@@ -82,7 +114,18 @@ class AdminNewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return redirect()->route('news.edit', ['news' => $id])->withInput($request->all());
+        $data = $request->all();
+        DB::table('news')
+            ->where('id', $id)
+            ->update([
+                "title"     => $data['title'],
+                "category_id"  => $data['category'],
+                "photo"     => $data['photo'],
+                "short_text"=> $data['short-text'],
+                "full_text" => $data['full-text'],
+            ]);
+
+        return redirect()->route('news.edit', ['news' => $id, 'status' => true])->withInput($request->all());
     }
 
     /**

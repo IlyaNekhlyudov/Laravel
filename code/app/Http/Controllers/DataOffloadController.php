@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Response;
+use DB;
 
 class DataOffloadController extends Controller
 {
@@ -28,21 +29,15 @@ class DataOffloadController extends Controller
      public function create(Request $request)
      {
          if ($request->old()) {
-            $path = '/files/dataOffload/';
-            $file = date("Y-m-d-H-i-s") . '.txt';
-            $result = null;
-    
-            $content = $request->old();
-            $content['time'] = date("H:i:s");
-            $content = implode(':::', $content);
- 
-            if (Storage::disk('public')->exists($path . $file)) {
-                $result = false;
-            } else {
-                // создание нового файла
-                $result = true;
-                Storage::disk('public')->put($path . $file, $content);
-            }
+            
+            $data = $request->old();
+            $result = DB::table('data_offload')
+                        ->insert([
+                            "name"          => $data['name'],
+                            "phone_number"  => $data['tel'],
+                            "email"         => $data['email'],
+                            "message"       => $data['info'],
+                        ]);
  
             return Response::view('dataOffload.create', [
                 'result'   => $result,
