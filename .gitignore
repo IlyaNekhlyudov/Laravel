@@ -38,3 +38,4 @@ tests/Settings/JsonSettingsTest.php
 tests/Settings/YamlSettingsTest.php
 tests/Traits/GeneratesTestDirectory.php
 Vagrantfile
+code/config/database.php
