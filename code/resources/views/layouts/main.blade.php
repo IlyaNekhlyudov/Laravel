@@ -21,15 +21,34 @@
         }
 
         .footer {
-            padding: 10px;
+            padding: 20px;
             margin-top: 50px;
             color: rgba(255,255,255,.5);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .feedback-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.8em;
+            transition: all, 0.3s;
+        }
+
+        .feedback-link:hover {
+            color: gray;
+            text-decoration: none;
+        }
+
+        .content {
+            padding: 0px 15px 0px 15px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" style='padding: inherit;'>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="{{ route('welcome') }}">
             <i class="fa fa-globe fa-2x" aria-hidden="true"></i>
@@ -45,14 +64,21 @@
                 <li class="nav-item @yield('news')">
                     <a class="nav-link" href="{{ route('news') }}">Новости</a>
                 </li>
+                <li class="nav-item @yield('request')">
+                    <a class="nav-link" href="{{ route('request.create') }}">Запрос информации</a>
+                </li>
             </ul>
         </div>
+        <a class="btn btn-light" href="{{ route('news.index') }}">Войти</a>
     </nav>
     <br>
-    @yield('content')
+    <div class='content'>
+        @yield('content')
+    </div>
 </div>
 <footer class='container footer bg-dark'>
-    © Nekhlyudov Ilya
+    <span style='font-size: 0.8em'>© Nekhlyudov Ilya</span>
+    <a class='feedback-link' href="{{ route('feedback.create') }}"'>Форма обратной связи</a>
 </footer>
 </body>
 </html>

@@ -12,15 +12,15 @@
         @endif
                 <div class="col-md-4">
                     <div class="card mx-auto" style="width: 18rem; height: auto">
-                        <img src="{{ $oneNews['photo'] }}" class="card-img-top" alt="{{ $oneNews['title'] }}">
+                        <img src="{{ $oneNews->photo }}" class="card-img-top" alt="{{ $oneNews->title }}">
                         <div class="card-body">
-                            <h4 class="card-title">{{ $oneNews['title'] }}</h4>
-                            <p class="card-text">{{ $oneNews['shortText'] }}</p>
+                            <h4 class="card-title">{{ $oneNews->title }}</h4>
+                            <p class="card-text">{{ $oneNews->short_text }}</p>
                             <p class="card-text"><small class="text-muted">
-                                <a href="{{ route('category.news', ['categoryId' => $oneNews['categoryId']]) }}" 
-                                    class='nav-link' style='padding: inherit;'>Категория: {{ $oneNews['categoryName'] }}</a>
+                                <a href="{{ route('category.news', ['categoryId' => $oneNews->category_id]) }}" 
+                                    class='nav-link' style='padding: inherit;'>Категория: {{ $oneNews->category_name }}</a>
                             </small></p>
-                            <a href="{{ route('news.id', ['id' => $oneNews['id']]) }}" class="btn btn-dark" style="bottom: 20px;" target="_blank">Читать</a>
+                            <a href="{{ route('news.id', ['id' => $oneNews->id]) }}" class="btn btn-dark" style="bottom: 20px;" target="_blank">Читать</a>
                         </div>
                     </div>
                 </div>
