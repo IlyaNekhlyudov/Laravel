@@ -16,9 +16,9 @@ class FeedbackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($result = false)
     {
-        return Response::view('feedback.index');
+        return redirect(route('feedback.create'));
     }
 
     /**
@@ -26,22 +26,15 @@ class FeedbackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
-    {
-        if ($request->old()) {
-            $data = $request->old();
-            $result = DB::table('feedback')
-                        ->insert([
-                            "name"      => $data['name'],
-                            "message"   => $data['comment'],
-                        ]);
-    
-            return Response::view('feedback.create', [
-                'result' => $result,
-            ]);
-        } else {
-            return redirect(route('feedback.index'));
+    public function create(Request $request, $result = false)
+    {  
+        if ($request->get('result')) {
+            $result = true;
         }
+
+        return Response::view('feedback.create', [
+            'result' => $result,
+        ]);
     }
 
     /**
@@ -52,6 +45,12 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('feedback.create')->withInput($request->except('_token'));
+        $data = $request->except('_token');
+        DB::table('feedback')
+            ->insert([
+                "name"      => $data['name'],
+                "message"   => $data['comment'],
+            ]);
+        return redirect()->route('feedback.create', ['result' => true]);
     }
 }

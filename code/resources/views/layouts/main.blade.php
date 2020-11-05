@@ -65,7 +65,7 @@
                     <a class="nav-link" href="{{ route('news') }}">Новости</a>
                 </li>
                 <li class="nav-item @yield('request')">
-                    <a class="nav-link" href="{{ route('request.index') }}">Запрос информации</a>
+                    <a class="nav-link" href="{{ route('request.create') }}">Запрос информации</a>
                 </li>
             </ul>
         </div>
@@ -78,7 +78,7 @@
 </div>
 <footer class='container footer bg-dark'>
     <span style='font-size: 0.8em'>© Nekhlyudov Ilya</span>
-    <a class='feedback-link' href="{{ route('feedback.index') }}"'>Форма обратной связи</a>
+    <a class='feedback-link' href="{{ route('feedback.create') }}"'>Форма обратной связи</a>
 </footer>
 </body>
 </html>

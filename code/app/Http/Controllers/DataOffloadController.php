@@ -18,7 +18,7 @@ class DataOffloadController extends Controller
      */
      public function index()
      {
-         return Response::view('dataOffload.index');
+         return redirect(route('request.create'));
      }
  
      /**
@@ -26,35 +26,34 @@ class DataOffloadController extends Controller
       *
       * @return \Illuminate\Http\Response
       */
-     public function create(Request $request)
+     public function create(Request $request, $result = false)
      {
-         if ($request->old()) {
-            
-            $data = $request->old();
-            $result = DB::table('data_offload')
-                        ->insert([
-                            "name"          => $data['name'],
-                            "phone_number"  => $data['tel'],
-                            "email"         => $data['email'],
-                            "message"       => $data['info'],
-                        ]);
- 
-            return Response::view('dataOffload.create', [
-                'result'   => $result,
+        if ($request->get('result')) {
+            $result = true;
+        }
+
+        return Response::view('dataOffload.create', [
+            'result'   => $result,
+        ]);
+    }
+    
+    /**
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function store(Request $request)
+    {
+        $data = $request->except('_token');
+        DB::table('data_offload')
+            ->insert([
+                "name"          => $data['name'],
+                "phone_number"  => $data['tel'],
+                "email"         => $data['email'],
+                "message"       => $data['info'],
             ]);
-         } else {
-             return redirect(route('request.index'));
-         }
-     }
- 
-     /**
-      * Store a newly created resource in storage.
-      *
-      * @param  \Illuminate\Http\Request  $request
-      * @return \Illuminate\Http\Response
-      */
-     public function store(Request $request)
-     {
-         return redirect()->route('request.create')->withInput($request->except('_token'));
+
+         return redirect()->route('request.create', ['result' => true]);
      }
 }

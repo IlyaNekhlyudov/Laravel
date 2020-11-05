@@ -15,7 +15,7 @@ class AdminNewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request, $result = false)
     {
         $news = DB::table('news')
             ->join('categories', 'news.category_id', '=', 'categories.id')
@@ -25,8 +25,13 @@ class AdminNewsController extends Controller
                 'categories.name AS category_name',
             ]);
 
+        if ($request->get('result')) {
+            $result = true;
+        }
+
         return Response::view('admin.news.index', [
             'news'       => $news,
+            'result'     => $result,
         ]);
     }
 
@@ -134,8 +139,11 @@ class AdminNewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        DB::table('news')
+            ->where('id', '=', $id)
+            ->delete();
+        return redirect()->route('news.index', ['result' => true]);
     }
 }
