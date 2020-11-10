@@ -39,3 +39,5 @@ tests/Settings/YamlSettingsTest.php
 tests/Traits/GeneratesTestDirectory.php
 Vagrantfile
 code/config/database.php
+private_key
+private_key.pub

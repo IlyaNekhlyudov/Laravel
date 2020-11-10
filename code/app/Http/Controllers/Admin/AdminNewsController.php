@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\News;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Response;
-use DB;
 
 class AdminNewsController extends Controller
 {
@@ -15,23 +16,11 @@ class AdminNewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $result = false)
+    public function index()
     {
-        $news = DB::table('news')
-            ->join('categories', 'news.category_id', '=', 'categories.id')
-            ->orderBy('news.id')
-            ->get([
-                'news.*',
-                'categories.name AS category_name',
-            ]);
-
-        if ($request->get('result')) {
-            $result = true;
-        }
-
         return Response::view('admin.news.index', [
-            'news'       => $news,
-            'result'     => $result,
+            'news'       => News::query()->paginate(5),
+            'categories' => Category::all()->keyBy('id'),
         ]);
     }
 
@@ -40,17 +29,10 @@ class AdminNewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $status = false)
+    public function create(Request $request)
     {
-        $categories = DB::table('categories')->get();
-
-        if (request()->get('status')) {
-            $status = true;
-        }
-
         return Response::view('admin.news.create', [
-            'categories' => $categories,
-            'status'     => $status,
+            'categories' => Category::all(),
         ]);
     }
 
@@ -58,20 +40,13 @@ class AdminNewsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | RedirectResponse
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        DB::table('news')
-            ->insert([
-                "title"         => $data['title'],
-                "category_id"   => $data['category'],
-                "photo"         => $data['photo'],
-                "short_text"    => $data['short-text'],
-                "full_text"     => $data['full-text'],
-            ]);
-        return redirect()->route('news.create', ['status' => true])->withInput($request->all());
+        News::query()->create($request->except(['_token']));
+
+        return redirect()->route('news.index');
     }
 
     /**
@@ -91,23 +66,13 @@ class AdminNewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response | RedirectResponse
      */
-    public function edit($id, $status = false)
+    public function edit($id)
     {
-        $news = DB::table('news')->find($id);
-        $categories = DB::table('categories')->select('id', 'name')->get();
-
-        if (request()->get('status')) {
-            $status = true;
-        }
-
-        if ($news) {
-            return Response::view('admin.news.edit', [
-                'news'       => $news,
-                'categories' => $categories,
-                'status'     => $status,
-            ]);
-        }
-        return redirect()->route('news.index');
+        $news = News::query()->findOrFail($id);
+        return Response::view('admin.news.edit', [
+            'news'       => $news,
+            'categories' => Category::all(),
+        ]);
     }
 
     /**
@@ -119,31 +84,22 @@ class AdminNewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-        DB::table('news')
-            ->where('id', $id)
-            ->update([
-                "title"     => $data['title'],
-                "category_id"  => $data['category'],
-                "photo"     => $data['photo'],
-                "short_text"=> $data['short-text'],
-                "full_text" => $data['full-text'],
-            ]);
-
-        return redirect()->route('news.edit', ['news' => $id, 'status' => true])->withInput($request->all());
+        $news = News::query()->findOrFail($id);
+        $news->update($request->except(['_token']));
+        return redirect()->route('news.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-        DB::table('news')
-            ->where('id', '=', $id)
-            ->delete();
-        return redirect()->route('news.index', ['result' => true]);
+        News::destroy($id);
+        return Response::json([
+            'status' => true,
+        ]);
     }
 }

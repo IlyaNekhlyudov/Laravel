@@ -17,8 +17,8 @@
                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="comment">Комментарий/отзыв</label>
-                    <textarea class="form-control" id="comment" name="comment" rows="7" required>{{ old('comment') }}</textarea>
+                    <label for="message">Комментарий/отзыв</label>
+                    <textarea class="form-control" id="comment" name="message" rows="7" required>{{ old('message') }}</textarea>
                 </div>
             </div>
             <div class="col-md-4">

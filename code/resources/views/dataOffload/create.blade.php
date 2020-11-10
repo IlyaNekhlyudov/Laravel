@@ -18,16 +18,16 @@
                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="tel">Номер телефона</label>
-                    <input type='tel' class="form-control" id="tel" name="tel" rows="7" required>{{ old('tel') }}</textarea>
+                    <label for="phone_number">Номер телефона</label>
+                    <input type='tel' class="form-control" id="phone_number" name="phone_number" rows="7" required>{{ old('phone_number') }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail</label>
                     <input type='email' class="form-control" id="email" name="email" rows="7" required>{{ old('email') }}</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="info">Информация, которую вы хотите получить</label>
-                    <textarea class="form-control" id="info" name="info" rows="7" required>{{ old('info') }}</textarea>
+                    <label for="message">Информация, которую вы хотите получить</label>
+                    <textarea class="form-control" id="message" name="message" rows="7" required>{{ old('message') }}</textarea>
                 </div>
             </div>
             <div class="col-md-4">
