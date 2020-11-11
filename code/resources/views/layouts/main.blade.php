@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -69,10 +70,15 @@
                 </li>
             </ul>
         </div>
-        <a class="btn btn-light" href="{{ route('news.index') }}">Войти</a>
+        <a class="btn btn-light" href="{{ route('admin') }}">Войти</a>
     </nav>
     <br>
     <div class='content'>
+        @if(isset($errors) && !empty($errors))
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger" role="alert">{{ $error }}</div>
+            @endforeach
+        @endif
         @yield('content')
     </div>
 </div>

@@ -30,7 +30,9 @@
                     <td>{{ $categories->get($oneNews->category_id)->name }}</td>
                     <td>
                         <a href="{{ route('news.edit', ['news' => $oneNews->id]) }}" class="text-dark mr-3"><i class="fa fa-pencil fa-2x" aria-hidden="true"></i></a>
-                        <a href="{{ route('news.destroy', ['news' => $oneNews->id]) }}" class="text-danger"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></a>
+                        <a href="#" class="text-danger delete-button" data-type="news" data-id="{{ $oneNews->id }}">
+                            <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+                        </a>
                     </td>
                 </tr>
             @empty

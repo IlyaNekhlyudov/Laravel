@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Response;
 use App\Models\DataOffload;
+use App\Http\Requests\UpsertDataOffloadRequest;
 
 class DataOffloadController extends Controller
 {
@@ -43,7 +44,7 @@ class DataOffloadController extends Controller
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
     */
-    public function store(Request $request)
+    public function store(UpsertDataOffloadRequest $request)
     {
         DataOffload::query()->create($request->except('_token'));
 

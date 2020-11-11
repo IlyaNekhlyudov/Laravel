@@ -19,11 +19,11 @@
                 </div>
                 <div class="form-group">
                     <label for="phone_number">Номер телефона</label>
-                    <input type='tel' class="form-control" id="phone_number" name="phone_number" rows="7" required>{{ old('phone_number') }}</textarea>
+                    <input type='tel' class="form-control" id="phone_number" name="phone_number" rows="7" required value="{{ old('phone_number') }}">
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input type='email' class="form-control" id="email" name="email" rows="7" required>{{ old('email') }}</textarea>
+                    <input type='email' class="form-control" id="email" name="email" rows="7" required value="{{ old('email') }}">
                 </div>
                 <div class="form-group">
                     <label for="message">Информация, которую вы хотите получить</label>

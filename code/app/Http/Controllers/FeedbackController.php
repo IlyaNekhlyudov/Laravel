@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Response;
 use App\Models\Feedback;
+use App\Http\Requests\UpsertFeedbackRequest;
 
 class FeedbackController extends Controller
 {
@@ -43,7 +44,7 @@ class FeedbackController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UpsertFeedbackRequest $request)
     {
         Feedback::query()->create($request->except('_token'));
 
