@@ -7,7 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Response;
-use DB;
+use App\Models\Feedback;
+use App\Http\Requests\UpsertFeedbackRequest;
 
 class FeedbackController extends Controller
 {
@@ -43,14 +44,10 @@ class FeedbackController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UpsertFeedbackRequest $request)
     {
-        $data = $request->except('_token');
-        DB::table('feedback')
-            ->insert([
-                "name"      => $data['name'],
-                "message"   => $data['comment'],
-            ]);
-        return redirect()->route('feedback.create', ['result' => true]);
+        Feedback::query()->create($request->except('_token'));
+
+        return Response::view('feedback.create', ['result' => true]);
     }
 }

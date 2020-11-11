@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpsertNewsRequest;
-use App\Models\Category;
-use App\Models\News;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Response;
 
-class AdminNewsController extends Controller
+class AdminFeedbackController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +16,8 @@ class AdminNewsController extends Controller
      */
     public function index()
     {
-        return Response::view('admin.news.index', [
-            'news'       => News::query()->paginate(5),
-            'categories' => Category::all()->keyBy('id'),
+        return Response::view('admin.feedback.index', [
+            'feedbacks' => Feedback::query()->paginate(10),
         ]);
     }
 
@@ -30,24 +26,20 @@ class AdminNewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        return Response::view('admin.news.create', [
-            'categories' => Category::all(),
-        ]);
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response | RedirectResponse
+     * @return \Illuminate\Http\Response
      */
-    public function store(UpsertNewsRequest $request)
+    public function store(Request $request)
     {
-        News::query()->create($request->except(['_token']));
-
-        return redirect()->route('news.index');
+        //
     }
 
     /**
@@ -65,14 +57,12 @@ class AdminNewsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response | RedirectResponse
+     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $news = News::query()->findOrFail($id);
-        return Response::view('admin.news.edit', [
-            'news'       => $news,
-            'categories' => Category::all(),
+        return Response::view('admin.feedback.edit', [
+            'feedback' => Feedback::query()->findOrFail($id)
         ]);
     }
 
@@ -83,11 +73,10 @@ class AdminNewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpsertNewsRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $news = News::query()->findOrFail($id);
-        $news->update($request->except(['_token']));
-        return redirect()->route('news.index');
+        Feedback::query()->where('id', $id)->update($request->except(['_token', '_method']));
+        return redirect()->route('feedback.index');
     }
 
     /**
@@ -96,10 +85,10 @@ class AdminNewsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        News::destroy($id);
-        return Response::json([
+        Feedback::destroy($id);
+        return \Response::json([
             'status' => true,
         ]);
     }

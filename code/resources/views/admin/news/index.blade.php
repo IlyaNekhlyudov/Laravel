@@ -3,9 +3,9 @@
 @section('title', 'Admin News')
 
 @section('content')
-    @if ($result)
+    @if(!empty($newNews))
         <div class="alert alert-success" role="alert">
-            Новость успешно удалена.
+            Новость <a href="{{ route('news.edit', $newNews->id) }}">"{{ $newNews->title }}"</a> успешно сохранена!
         </div>
     @endif
     <a href="{{ route('news.create') }}" class="btn btn-dark mb-3 float-right">Добавить новость</a>
@@ -27,16 +27,19 @@
                     <td>{{ $oneNews->title }}</td>
                     <td>{{ $oneNews->short_text }}</td>
                     <td><img src="{{ $oneNews->photo }}" alt="" style="max-width: 300px;"></td>
-                    <td>{{ $oneNews->category_name }}</td>
+                    <td>{{ $categories->get($oneNews->category_id)->name }}</td>
                     <td>
                         <a href="{{ route('news.edit', ['news' => $oneNews->id]) }}" class="text-dark mr-3"><i class="fa fa-pencil fa-2x" aria-hidden="true"></i></a>
-                        <a href="{{ route('news.destroy', ['news' => $oneNews->id]) }}" class="text-danger"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></a>
+                        <a href="#" class="text-danger delete-button" data-type="news" data-id="{{ $oneNews->id }}">
+                            <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+                        </a>
                     </td>
                 </tr>
             @empty
                 <h1>Нет новостей</h1>
             @endforelse
         </tbody>
+    {{ $news->links() }}
     </table>
 @endsection
 

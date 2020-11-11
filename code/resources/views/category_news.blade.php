@@ -6,7 +6,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <h1 class="text-center">{{ $news[0]->category_name }}</h1>
+            <h1 class="text-center">{{ $category->name }}</h1>
         </div>
     </div>
 

@@ -6,6 +6,7 @@
 @section('content')
 
     @php $counter = 0; @endphp
+    {{ $news->links() }}
     @forelse($news as $oneNews)
         @if($counter % 3 == 0)
             <div class="row mb-3">
@@ -18,7 +19,7 @@
                             <p class="card-text">{{ $oneNews->short_text }}</p>
                             <p class="card-text"><small class="text-muted">
                                 <a href="{{ route('category.news', ['categoryId' => $oneNews->category_id]) }}" 
-                                    class='nav-link' style='padding: inherit;'>Категория: {{ $oneNews->category_name }}</a>
+                                    class='nav-link' style='padding: inherit;'>Категория: {{ $categories->get($oneNews->category_id)->name }}</a>
                             </small></p>
                             <a href="{{ route('news.id', ['id' => $oneNews->id]) }}" class="btn btn-dark" style="bottom: 20px;" target="_blank">Читать</a>
                         </div>
@@ -31,5 +32,6 @@
     @empty
         <p class='lead' style='text-align: center; margin-top: 100px; margin-bottom: 100px;'>Новостей нет. Приходите завтра.</p>
     @endforelse
+    
 
 @endsection

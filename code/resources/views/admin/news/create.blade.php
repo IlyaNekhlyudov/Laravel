@@ -3,11 +3,6 @@
 @section('title', 'Add News')
 
 @section('content')
-    @if($status)
-        <div class="alert alert-success" role="alert">
-            Новость успешно добавлена.
-        </div>
-    @endif
     <form action="{{ route('news.store') }}" method="POST">
         @csrf
         <div class="row">
@@ -17,8 +12,8 @@
                     <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
                 </div>
                 <div class="form-group">
-                    <label for="category">Категория</label>
-                    <select class="form-control" id="category" name="category">
+                    <label for="category_id">Категория</label>
+                    <select class="form-control" id="category" name="category_id">
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
@@ -29,12 +24,12 @@
                     <input type="text" class="form-control" id="photo" name="photo" placeholder="Ссылка..." value="{{ old('photo') }}">
                 </div>
                 <div class="form-group">
-                    <label for="short-text">Короткий текст</label>
-                    <textarea class="form-control" id="short-text" name="short-text" rows="3">{{ old('short-text') }}</textarea>
+                    <label for="short_text">Короткий текст</label>
+                    <textarea class="form-control" id="short_text" name="short_text" rows="3">{{ old('short_text') }}</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="full-text">Полный текст</label>
-                    <textarea class="form-control" id="full-text" name="full-text" rows="7">{{ old('full-text') }}</textarea>
+                    <label for="full_text">Полный текст</label>
+                    <textarea class="form-control" id="full_text" name="full_text" rows="7">{{ old('full_text') }}</textarea>
                 </div>
             </div>
             <div class="col-md-4">

@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Response;
 
 class CategoryController extends Controller
 {
     public function all()
     {
-        $categories = DB::table('categories')->get();
-        return view('category', [
-            'categories' => $categories,
+        return Response::view('category', [
+            'categories' => Category::all(),
         ]);
     }
 }
