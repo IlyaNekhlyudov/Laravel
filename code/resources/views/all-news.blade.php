@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('title', 'All news')
 @section('news', 'active')
@@ -6,7 +6,9 @@
 @section('content')
 
     @php $counter = 0; @endphp
-    {{ $news->links() }}
+    <div style='margin-left: 120px'>
+        {{ $news->links() }}
+    </div>
     @forelse($news as $oneNews)
         @if($counter % 3 == 0)
             <div class="row mb-3">

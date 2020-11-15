@@ -1,6 +1,7 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('title', 'Feedback')
+@section('feedback', 'active')
 
 @section('content')
 @if ($result)
