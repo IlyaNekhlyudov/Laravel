@@ -166,6 +166,9 @@ return [
          * Package Service Providers...
          */
 
+        Orchestra\Parser\XmlServiceProvider::class, 
+        SocialiteProviders\Manager\ServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
