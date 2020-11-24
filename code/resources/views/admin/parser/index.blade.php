@@ -15,9 +15,9 @@
                 </label>
             </div>
         @endforeach
-
             <input type="submit" class="btn btn-dark mt-2" value="Поехали">
     </form>
+    <a href="{{ route('parser.create') }}" class="btn btn-dark mt-2">Добавить источник</a>
 
 @endsection
 

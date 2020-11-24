@@ -12,15 +12,14 @@
 
     @forelse ($news as $oneNews)
         <div class="row mt-3">
-            <div class="col-md-6">
-                <img src="{{ $oneNews->photo }}" class="img-fluid" alt="Responsive image">
-            </div>
-            <div class="col-md-6 module">
-                <h2>
-                    <a href="{{ route('news.id', ['id' => $oneNews->id]) }}" class="badge badge-light" 
-                            style='white-space: break-spaces;' target="_blank">{{ $oneNews->title }}</a>
-                </h2>
-                <p class="line-clamp">{{ $oneNews->short_text }}</p>
+            <div class="col-md-12">
+                <h4>{{ $oneNews->title }}</h4>
+                <p>{!! $oneNews->short_text !!}</p>
+                @if (isset($oneNews->link) && !empty($oneNews->link))
+                    <a href="{{ $oneNews->link }}" target="_blank">Читать в источнике</a>
+                @else
+                    <a href="{{ route('news.id', ['id' => $oneNews->id]) }}" class="btn btn-dark" style="bottom: 20px;" target="_blank">Читать</a>
+                @endif
             </div>
         </div>
         <hr>

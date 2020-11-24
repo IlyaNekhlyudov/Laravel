@@ -41,3 +41,26 @@ Vagrantfile
 code/config/database.php
 private_key
 private_key.pub
+code/public/vendor/laravel-filemanager/css/cropper.min.css
+code/public/vendor/laravel-filemanager/css/dropzone.min.css
+code/public/vendor/laravel-filemanager/css/lfm.css
+code/public/vendor/laravel-filemanager/css/mime-icons.min.css
+code/public/vendor/laravel-filemanager/files/.gitkeep
+code/public/vendor/laravel-filemanager/files/adobe.pdf
+code/public/vendor/laravel-filemanager/files/folder-1/sleeping-dog.jpg
+code/public/vendor/laravel-filemanager/files/word.docx
+code/public/vendor/laravel-filemanager/images/.gitkeep
+code/public/vendor/laravel-filemanager/images/test-folder/sleeping-dog.jpg
+code/public/vendor/laravel-filemanager/images/test-folder/thumbs/sleeping-dog.jpg
+code/public/vendor/laravel-filemanager/img/152px color.png
+code/public/vendor/laravel-filemanager/img/72px color.png
+code/public/vendor/laravel-filemanager/img/92px color.png
+code/public/vendor/laravel-filemanager/img/folder.png
+code/public/vendor/laravel-filemanager/img/loader.svg
+code/public/vendor/laravel-filemanager/img/Logomark color.png
+code/public/vendor/laravel-filemanager/js/cropper.min.js
+code/public/vendor/laravel-filemanager/js/dropzone.min.js
+code/public/vendor/laravel-filemanager/js/filemanager.js
+code/public/vendor/laravel-filemanager/js/filemanager.min.js
+code/public/vendor/laravel-filemanager/js/script.js
+code/public/vendor/laravel-filemanager/js/stand-alone-button.js

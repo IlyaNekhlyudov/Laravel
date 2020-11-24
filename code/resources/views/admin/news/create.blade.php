@@ -12,10 +12,10 @@
                     <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
                 </div>
                 <div class="form-group">
-                    <label for="category_id">Категория</label>
+                    <label for="category">Категория</label>
                     <select class="form-control" id="category" name="category_id">
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}">{{ $category->id }} / {{ $category->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -24,12 +24,12 @@
                     <input type="text" class="form-control" id="photo" name="photo" placeholder="Ссылка..." value="{{ old('photo') }}">
                 </div>
                 <div class="form-group">
-                    <label for="short_text">Короткий текст</label>
-                    <textarea class="form-control" id="short_text" name="short_text" rows="3">{{ old('short_text') }}</textarea>
+                    <label for="short-text">Короткий текст</label>
+                    <textarea class="form-control" id="short-text" name="short_text" rows="3">{{ old('short_text') }}</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="full_text">Полный текст</label>
-                    <textarea class="form-control" id="full_text" name="full_text" rows="7">{{ old('full_text') }}</textarea>
+                    <label for="full-text">Полный текст</label>
+                    <textarea class="form-control" id="full-text" name="full_text" rows="7">{{ old('full_text') }}</textarea>
                 </div>
             </div>
             <div class="col-md-4">
@@ -42,4 +42,19 @@
             </div>
         </div>
     </form>
+
+    <script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script>
+        let options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Image',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Image&token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&token=',
+        };
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            CKEDITOR.replace('full-text', options);
+        });
+    </script>
 @endsection
