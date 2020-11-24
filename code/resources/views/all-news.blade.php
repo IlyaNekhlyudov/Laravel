@@ -18,12 +18,16 @@
                         <img src="{{ $oneNews->photo }}" class="card-img-top" alt="{{ $oneNews->title }}">
                         <div class="card-body">
                             <h4 class="card-title">{{ $oneNews->title }}</h4>
-                            <p class="card-text">{{ $oneNews->short_text }}</p>
+                            <p class="card-text">{!! $oneNews->short_text !!}</p>
                             <p class="card-text"><small class="text-muted">
                                 <a href="{{ route('category.news', ['categoryId' => $oneNews->category_id]) }}" 
                                     class='nav-link' style='padding: inherit;'>Категория: {{ $categories->get($oneNews->category_id)->name }}</a>
                             </small></p>
-                            <a href="{{ route('news.id', ['id' => $oneNews->id]) }}" class="btn btn-dark" style="bottom: 20px;" target="_blank">Читать</a>
+                            @if (isset($oneNews->link) && !empty($oneNews->link))
+                                <a href="{{ $oneNews->link }}" class="btn btn-dark" style="bottom: 20px;" target="_blank">Читать</a>
+                            @else
+                                <a href="{{ route('news.id', ['id' => $oneNews->id]) }}" class="btn btn-dark" style="bottom: 20px;" target="_blank">Читать</a>
+                            @endif
                         </div>
                     </div>
                 </div>

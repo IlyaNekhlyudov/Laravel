@@ -12,6 +12,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\DataOffloadController;
 use App\Http\Controllers\SocialController;
 use Illuminate\Support\Facades\Route;
+use UniSharp\LaravelFilemanager\Lfm;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,9 @@ Route::middleware(['auth'])->middleware('is.admin')->prefix('/admin')->group(fun
     
     Route::get('/parser', [AdminParserController::class, 'index'])->name('parser');
     Route::post('/parser/parse', [AdminParserController::class, 'parse'])->name('parser.parse');
+    Route::get('/parser/add', [AdminParserController::class, 'create'])->name('parser.create');
+    Route::post('/parser/store', [AdminParserController::class, 'store'])->name('parser.store');
+    
 
     Route::resource('news', AdminNewsController::class);
     Route::resource('feedback', AdminFeedbackController::class)->except(['store']);
@@ -76,3 +80,7 @@ Route::middleware(['auth'])->prefix('/request')->group(function () {
     Route::post('/store', [DataOffloadController::class, 'store'])->name('request.store');
 });
 Auth::routes();
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    Lfm::routes();
+});
